@@ -10,6 +10,7 @@
 <x-dc>
 
 <helmet data-dc-atomics="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
@@ -44,13 +45,19 @@
   @media (max-width:640px){
     .logos-track{animation-duration:20s}
     .logos-track>*{margin-right:32px}
-    .grid-about,.grid-services,.grid-tech,.grid-contact,.grid-perks{grid-template-columns:1fr!important}
+    .logos-track img{height:auto!important;max-height:80px;max-width:110px!important}
+    .grid-about,.grid-services,.grid-tech,.grid-contact,.grid-perks{grid-template-columns:1fr!important;gap:32px!important}
     .gallery-tile{flex-basis:170px;height:300px}
     .gallery-tile:hover{flex-basis:250px}
     .grid-footer{grid-template-columns:1fr!important;gap:28px!important}
     section,.sec{padding-left:20px!important;padding-right:20px!important}
+    .sec{padding-top:40px!important;padding-bottom:56px!important}
     header{padding-left:16px!important;padding-right:16px!important}
-    .hero-inner{padding-left:20px!important;padding-right:20px!important}
+    .hero-inner{padding:90px 20px 70px!important}
+    section:first-of-type{min-height:78vh!important}
+    .grid-portfolio{padding:22px!important;gap:26px!important}
+    .grid-portfolio>sc-if>div,.grid-portfolio>div:first-child{max-width:300px;margin:0 auto}
+    #contact.sec{padding-top:70px!important}
   }
 </style>
 </helmet>

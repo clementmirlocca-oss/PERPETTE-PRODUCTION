@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet data-dc-atomics>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#0a0a0a;color:#f4f2ee;font-family:'Manrope',sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:#f2c14e;text-decoration:none}
+  a:hover{color:#ffd873}
+  *{box-sizing:border-box}
+  .dots{background-image:radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);background-size:28px 28px}
+  ::selection{background:#f2c14e;color:#0a0a0a}
+</style>
+</helmet>
+
+<div style="background:#0a0a0a;min-height:100vh;overflow-x:hidden">
+
+  <!-- NAV -->
+  <header style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:22px 48px;background:rgba(10,10,10,.75);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.06)">
+    <div style="display:flex;flex-direction:column;line-height:1;font-family:'Space Grotesk',sans-serif">
+      <span style="font-size:20px;font-weight:700;letter-spacing:.5px"><span style="color:#f4f2ee">PERP</span><span style="color:#f2c14e">ETTE</span></span>
+      <span style="font-size:9px;letter-spacing:4px;color:rgba(244,242,238,.5);margin-top:2px">PRODUCTION</span>
+    </div>
+    <nav style="display:flex;gap:36px;font-size:14px;font-weight:600;color:rgba(244,242,238,.85)">
+      <a href="#prestations" style="color:inherit">Prestations</a>
+      <a href="#portfolio" style="color:inherit">Portfolio</a>
+      <a href="#agence" style="color:inherit">L'agence</a>
+      <a href="#references" style="color:inherit">Références</a>
+    </nav>
+    <a href="#contact" style="display:flex;align-items:center;gap:8px;padding:11px 20px;border-radius:999px;border:1px solid rgba(255,255,255,.18);font-size:14px;font-weight:600;color:#f4f2ee">Contact <span style="font-size:15px">↗</span></a>
+  </header>
+
+  <!-- HERO -->
+  <section class="dots" style="position:relative;padding:120px 48px 80px;text-align:center;display:flex;flex-direction:column;align-items:center">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%, rgba(242,193,78,.08), transparent 60%)"></div>
+    <h1 style="position:relative;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(48px,9vw,124px);line-height:.95;margin:0;letter-spacing:-1px">
+      <span style="color:#f4f2ee">PERP</span><span style="color:#f2c14e">ETTE</span><br>
+      <span style="color:#f4f2ee">PRODUCTION</span><span style="color:#f2c14e">.</span>
+    </h1>
+    <p style="position:relative;margin:28px 0 0;font-size:clamp(18px,2.2vw,26px);font-weight:600;color:rgba(244,242,238,.9)">Fait pour durer. Littéralement.</p>
+    <p style="position:relative;max-width:560px;margin:14px 0 36px;font-size:15px;line-height:1.7;color:rgba(244,242,238,.55)">Réalisation vidéo indépendante — de la captation au montage final, une seule personne pour porter votre projet du premier plan au dernier export.</p>
+    <a href="#contact" style="position:relative;padding:14px 28px;border-radius:999px;background:#f4f2ee;color:#0a0a0a;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:8px">Me contacter <span>↗</span></a>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="agence" style="padding:60px 48px 120px;display:grid;grid-template-columns:1fr 1.2fr;gap:56px;align-items:center;max-width:1280px;margin:0 auto">
+    <div style="aspect-ratio:4/3;border-radius:14px;background:repeating-linear-gradient(135deg, #1a1a1a 0 14px, #161616 14px 28px);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center">
+      <span style="font-family:ui-monospace,monospace;font-size:12px;color:rgba(244,242,238,.4);letter-spacing:1px">SHOWREEL — À VENIR</span>
+    </div>
+    <div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(28px,3.4vw,42px);margin:0 0 20px;line-height:1.1">Production vidéo indépendante,<br>quelque part en France<span style="color:#f2c14e">.</span></h2>
+      <p style="font-size:15px;line-height:1.75;color:rgba(244,242,238,.6);max-width:480px;margin:0 0 12px">Chaque image compte. Chaque plan a une raison d'être.</p>
+      <p style="font-size:15px;line-height:1.75;color:rgba(244,242,238,.6);max-width:480px;margin:0 0 28px">Perpette Production accompagne marques, entreprises et créateurs qui veulent des vidéos pensées pour durer — pas pour disparaître dans un flux.</p>
+      <a href="#contact" style="padding:13px 24px;border-radius:999px;border:1px solid rgba(255,255,255,.18);font-weight:600;font-size:14px;color:#f4f2ee">Nous contacter</a>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="prestations" style="padding:80px 48px;max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start">
+    <div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(30px,3.6vw,44px);margin:0 0 22px;line-height:1.1">Des vidéos pensées pour<br>chaque besoin<span style="color:#f2c14e">.</span></h2>
+      <div style="width:56px;height:2px;background:rgba(255,255,255,.2);margin-bottom:22px"></div>
+      <p style="font-size:15px;line-height:1.75;color:rgba(244,242,238,.6);margin:0 0 14px">Chaque projet est une histoire à part entière.</p>
+      <p style="font-size:15px;line-height:1.75;color:rgba(244,242,238,.6);margin:0 0 14px">Au cœur de chaque tournage, <strong style="color:#f4f2ee">créativité, exigence et sincérité</strong> se rejoignent pour donner naissance à des vidéos qui résonnent autant par leur image que par leur authenticité.</p>
+      <p style="font-size:15px;line-height:1.75;color:rgba(244,242,238,.6);margin:0 0 28px">Parce qu'une belle image ne suffit pas, <strong style="color:#f4f2ee">je raconte votre vision à travers un récit fort</strong>, pensé pour marquer les esprits sur tous les écrans.</p>
+      <a href="#contact" style="padding:13px 24px;border-radius:999px;border:1px solid rgba(255,255,255,.18);font-weight:600;font-size:14px;color:#f4f2ee">Contact</a>
+    </div>
+    <div style="border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:12px;background:rgba(255,255,255,.02)">
+      <sc-for list="{{ services }}" as="s" hint-placeholder-count="5">
+        <div onClick="{{ s.toggle }}" style="padding:18px 16px;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font-weight:600;font-size:15px">{{ s.name }}</span>
+            <span style="font-size:14px;color:rgba(244,242,238,.5)">{{ s.icon }}</span>
+          </div>
+          <sc-if value="{{ s.open }}">
+            <p style="margin:10px 0 0;font-size:13.5px;line-height:1.6;color:rgba(244,242,238,.55)">{{ s.desc }}</p>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- PERKS -->
+  <section style="padding:60px 48px 100px;max-width:1280px;margin:0 auto">
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(32px,4vw,52px);margin:0 0 40px">Les <span style="color:#f2c14e">+</span> de travailler ensemble<span style="color:#f2c14e">.</span></h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px">
+      <sc-for list="{{ perks }}" as="p" hint-placeholder-count="6">
+        <div style="border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:26px;background:rgba(255,255,255,.02)">
+          <div style="width:40px;height:40px;border-radius:999px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:16px">{{ p.icon }}</div>
+          <h3 style="margin:0 0 10px;font-size:16px;font-weight:700">{{ p.title }}</h3>
+          <div style="width:100%;border-top:1px dashed rgba(255,255,255,.15);margin-bottom:12px"></div>
+          <p style="margin:0;font-size:13.5px;line-height:1.65;color:rgba(244,242,238,.55)">{{ p.desc }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio" style="padding:80px 48px;max-width:1280px;margin:0 auto">
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(30px,3.6vw,44px);margin:0 0 30px;text-align:center">Des projets qui prennent forme<span style="color:#f2c14e">.</span></h2>
+    <div style="display:flex;justify-content:center;gap:14px;margin-bottom:30px;flex-wrap:wrap">
+      <sc-for list="{{ projects }}" as="proj" hint-placeholder-count="3">
+        <button onClick="{{ proj.select }}" style="{{ proj.tabStyle }}">{{ proj.icon }} {{ proj.name }}</button>
+      </sc-for>
+    </div>
+    <div style="border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:44px;background:rgba(255,255,255,.02);display:grid;grid-template-columns:340px 1fr;gap:44px;align-items:center">
+      <div style="aspect-ratio:9/16;border-radius:14px;background:repeating-linear-gradient(135deg, #1c1c1c 0 14px, #171717 14px 28px);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center">
+        <span style="font-family:ui-monospace,monospace;font-size:11px;color:rgba(244,242,238,.4);text-align:center;padding:0 20px">VIDÉO — {{ activeProject.name }}</span>
+      </div>
+      <div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;margin:0 0 18px">{{ activeProject.title }}</h3>
+        <p style="font-size:14.5px;line-height:1.75;color:rgba(244,242,238,.6);margin:0 0 14px">{{ activeProject.p1 }}</p>
+        <p style="font-size:14.5px;line-height:1.75;color:rgba(244,242,238,.6);margin:0 0 24px">{{ activeProject.p2 }}</p>
+        <a href="#contact" style="padding:12px 22px;border-radius:999px;border:1px solid rgba(255,255,255,.18);font-weight:600;font-size:14px;color:#f4f2ee">Contact</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH MEANS -->
+  <section style="padding:20px 48px 100px;max-width:1280px;margin:0 auto">
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(28px,3.4vw,40px);margin:0 0 30px">Moyens techniques<span style="color:#f2c14e">.</span></h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+      <sc-for list="{{ tech }}" as="t" hint-placeholder-count="4">
+        <div style="border:1px solid {{ t.border }};border-radius:14px;padding:26px;background:rgba(255,255,255,.02)">
+          <h3 style="margin:0 0 12px;font-size:16px;font-weight:700">{{ t.title }}</h3>
+          <p style="margin:0;font-size:13.5px;line-height:1.65;color:rgba(244,242,238,.55)">{{ t.desc }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- REFERENCES / CLIENTS -->
+  <section id="references" style="padding:20px 48px 100px;max-width:1280px;margin:0 auto;text-align:center">
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(26px,3vw,36px);margin:0 0 12px">Premiers projets, mêmes exigences<span style="color:#f2c14e">.</span></h2>
+    <p style="font-size:14px;color:rgba(244,242,238,.5);margin:0 0 34px">Nouvelle structure, même niveau d'engagement sur chaque tournage.</p>
+    <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap">
+      <sc-for list="{{ clientSlots }}" as="c" hint-placeholder-count="6">
+        <div style="width:170px;height:64px;border-radius:10px;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:1px;color:rgba(244,242,238,.35)">{{ c.label }}</div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- CONTACT / FOOTER -->
+  <section id="contact" style="position:relative;padding:110px 48px 40px;border-top:1px solid rgba(255,255,255,.06)">
+    <div style="max-width:1280px;margin:0 auto 90px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start">
+      <div>
+        <p style="font-size:12px;letter-spacing:4px;color:rgba(244,242,238,.45);margin:0 0 22px;font-family:ui-monospace,monospace">PARLONS-EN</p>
+        <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(34px,4.6vw,56px);margin:0 0 24px;line-height:1.05">Un projet en tête<span style="color:#f2c14e">?</span></h2>
+        <p style="font-size:15px;line-height:1.7;color:rgba(244,242,238,.55);max-width:400px;margin:0 0 32px">Dites-moi ce que vous voulez raconter. Je reviens vers vous sous 48h avec une piste et un budget.</p>
+        <a href="mailto:contact@perpetteproduction.fr" style="display:block;font-size:16px;font-weight:600;color:#f4f2ee;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.15);max-width:400px;margin-bottom:18px">contact@perpetteproduction.fr</a>
+        <p style="font-family:ui-monospace,monospace;font-size:15px;color:#f4f2ee;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.15);max-width:400px;margin:0 0 18px">sur demande</p>
+        <p style="font-size:13.5px;color:rgba(244,242,238,.4);margin:0">France · @perpette.production</p>
+      </div>
+      <form onSubmit="{{ onSubmit }}" style="display:flex;flex-direction:column;gap:26px">
+        <div>
+          <label style="display:block;font-size:11px;letter-spacing:2px;color:rgba(244,242,238,.4);margin-bottom:10px;font-family:ui-monospace,monospace">NOM</label>
+          <input type="text" placeholder="Prénom Nom" style="width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.18);color:#f4f2ee;font-size:16px;padding:0 0 12px;outline:none;font-family:'Manrope',sans-serif"/>
+        </div>
+        <div>
+          <label style="display:block;font-size:11px;letter-spacing:2px;color:rgba(244,242,238,.4);margin-bottom:10px;font-family:ui-monospace,monospace">EMAIL</label>
+          <input type="email" placeholder="vous@studio.com" style="width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.18);color:#f4f2ee;font-size:16px;padding:0 0 12px;outline:none;font-family:'Manrope',sans-serif"/>
+        </div>
+        <div>
+          <label style="display:block;font-size:11px;letter-spacing:2px;color:rgba(244,242,238,.4);margin-bottom:10px;font-family:ui-monospace,monospace">TYPE DE PROJET</label>
+          <select style="width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.18);color:#f4f2ee;font-size:16px;padding:0 0 12px;outline:none;font-family:'Manrope',sans-serif">
+            <option style="background:#0a0a0a">Vidéo corporate</option>
+            <option style="background:#0a0a0a">Film événementiel</option>
+            <option style="background:#0a0a0a">Publicité &amp; spot produit</option>
+            <option style="background:#0a0a0a">Clip artistique</option>
+            <option style="background:#0a0a0a">Contenu digital &amp; social</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-size:11px;letter-spacing:2px;color:rgba(244,242,238,.4);margin-bottom:10px;font-family:ui-monospace,monospace">MESSAGE</label>
+          <textarea placeholder="Décrivez votre projet, vos échéances…" rows="5" style="width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.18);color:#f4f2ee;font-size:16px;padding:0 0 12px;outline:none;resize:vertical;font-family:'Manrope',sans-serif"></textarea>
+        </div>
+        <button type="submit" style="margin-top:8px;padding:16px;border:none;border-radius:8px;background:#f2c14e;color:#0a0a0a;font-weight:700;font-size:15px;cursor:pointer">{{ submitLabel }}</button>
+      </form>
+    </div>
+    <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;padding-top:40px;border-top:1px solid rgba(255,255,255,.08)">
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;margin-bottom:14px"><span style="color:#f4f2ee">PERP</span><span style="color:#f2c14e">ETTE</span> <span style="font-weight:500;color:rgba(244,242,238,.5)">Production</span></div>
+        <p style="font-size:13.5px;color:rgba(244,242,238,.45);line-height:1.6;margin:0 0 6px">✉ contact@perpetteproduction.fr</p>
+        <p style="font-size:13.5px;color:rgba(244,242,238,.45);line-height:1.6;margin:0 0 6px">📞 sur demande</p>
+        <p style="font-size:13.5px;color:rgba(244,242,238,.45);line-height:1.6;margin:0">📍 France</p>
+      </div>
+      <div>
+        <h4 style="font-size:14px;margin:0 0 16px">Navigation</h4>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:13.5px">
+          <a href="#prestations" style="color:rgba(244,242,238,.6)">Prestations</a>
+          <a href="#portfolio" style="color:rgba(244,242,238,.6)">Portfolio</a>
+          <a href="#agence" style="color:rgba(244,242,238,.6)">L'agence</a>
+          <a href="#references" style="color:rgba(244,242,238,.6)">Références</a>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-size:14px;margin:0 0 16px">Réseaux</h4>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:13.5px">
+          <a href="#" style="color:rgba(244,242,238,.6)">Instagram</a>
+          <a href="#" style="color:rgba(244,242,238,.6)">LinkedIn</a>
+          <a href="#" style="color:rgba(244,242,238,.6)">Vimeo</a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1280px;margin:40px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.06);font-size:12px;color:rgba(244,242,238,.3);text-align:center">© 2026 Perpette Production. Tous droits réservés.</div>
+  </section>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+
+class Component extends DCLogic {
+  state = {
+    openService: 0,
+    activeProject: 0,
+    submitted: false
+  };
+
+  serviceData = [
+    { name: 'Vidéo corporate', icon: '+', desc: "Films institutionnels, présentation d'entreprise, recrutement : une image fidèle à votre identité." },
+    { name: 'Film événementiel', icon: '+', desc: "Captation de vos événements, mariages, concerts et soirées, montés en récit vivant." },
+    { name: 'Publicité & spot produit', icon: '+', desc: "Des spots courts et percutants pensés pour convertir sur le web et les réseaux." },
+    { name: 'Clip artistique', icon: '+', desc: "Habillage visuel fort pour artistes et créateurs, du concept au clip final." },
+    { name: 'Contenu digital & social', icon: '+', desc: "Formats courts et verticaux optimisés pour Instagram, TikTok et YouTube Shorts." }
+  ];
+
+  perkData = [
+    { icon: '◎', title: 'Qualité cinématographique', desc: "Captation en haute définition, lumière maîtrisée et direction artistique précise sur chaque plan." },
+    { icon: '✦', title: 'Storytelling maîtrisé', desc: "Chaque idée devient un récit visuel cohérent, où chaque séquence renforce votre message." },
+    { icon: '★', title: 'Rendu adapté', desc: "Du format long au contenu court, vos vidéos sont optimisées pour tous les canaux de diffusion." },
+    { icon: '⏱', title: 'Disponibilité totale', desc: "Un interlocuteur unique, mobile et réactif, disponible partout en France pour votre tournage." },
+    { icon: '▤', title: 'Post-production soignée', desc: "Montage, étalonnage, sound design et habillage graphique assurés de bout en bout." },
+    { icon: '⚑', title: 'Prestation personnalisée', desc: "Un accompagnement sur mesure, de la conception à la diffusion, adapté à votre projet." }
+  ];
+
+  projectData = [
+    { name: 'Projet 01', icon: '◎', title: 'Un lieu, une ambiance.', p1: "Ce projet capture l'essence d'un lieu à part, où lumière et atmosphère se rencontrent.", p2: "Entre plans rapprochés et prises larges, l'objectif : révéler un savoir-faire qui se ressent autant qu'il se voit." },
+    { name: 'Projet 02', icon: '✦', title: 'Une marque, un récit.', p1: "Une vidéo pensée pour raconter une identité de marque avec clarté et impact.", p2: "Rythme maîtrisé et image soignée pour un rendu qui marque les esprits sur tous les écrans." },
+    { name: 'Projet 03', icon: '★', title: 'Un moment, capté.', p1: "La captation d'un événement pensée comme un récit, pas comme une simple archive.", p2: "Chaque séquence est montée pour restituer l'émotion réelle du moment vécu." }
+  ];
+
+  clientLabels = ['CLIENT 01', 'CLIENT 02', 'CLIENT 03', 'CLIENT 04', 'CLIENT 05', 'CLIENT 06'];
+
+  renderVals() {
+    const openService = this.state.openService;
+    const activeIdx = this.state.activeProject;
+
+    const services = this.serviceData.map((s, i) => ({
+      ...s,
+      open: i === openService,
+      toggle: () => this.setState({ openService: i === openService ? -1 : i })
+    }));
+
+    const projects = this.projectData.map((p, i) => ({
+      ...p,
+      select: () => this.setState({ activeProject: i }),
+      tabStyle: `padding:11px 20px;border-radius:999px;font-size:13.5px;font-weight:600;cursor:pointer;border:1px solid ${i === activeIdx ? '#f2c14e' : 'rgba(255,255,255,.14)'};background:${i === activeIdx ? 'rgba(242,193,78,.1)' : 'transparent'};color:#f4f2ee`
+    }));
+
+    const tech = [
+      { title: 'Captation & image', desc: "Caméras plein format, optiques cinéma, stabilisateurs et sliders — lumières LED modulables selon les besoins du projet.", border: 'rgba(255,255,255,.08)' },
+      { title: 'Prises de vue aériennes', desc: "Drone homologué, pilote certifié, pour des perspectives uniques en environnement urbain ou naturel.", border: 'rgba(242,193,78,.35)' },
+      { title: 'Post-production & effets', desc: "Montage, étalonnage colorimétrique, sound design et habillage graphique sur mesure.", border: 'rgba(255,255,255,.08)' },
+      { title: 'Diffusion & formats', desc: "Optimisation multi-supports — site web, réseaux, publicité — avec contrôle qualité sur chaque livrable.", border: 'rgba(255,255,255,.08)' }
+    ];
+
+    return {
+      services,
+      perks: this.perkData,
+      projects,
+      activeProject: this.projectData[activeIdx],
+      tech,
+      clientSlots: this.clientLabels.map(l => ({ label: l })),
+      submitLabel: this.state.submitted ? 'Message envoyé ✓' : 'Envoyer le brief',
+      onSubmit: (e) => { e.preventDefault(); this.setState({ submitted: true }); }
+    };
+  }
+}
+
+</script>
+</body>
+</html>

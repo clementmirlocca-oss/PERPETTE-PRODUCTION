@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +11,9 @@
 
 <helmet data-dc-atomics="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
   body{margin:0;background:#0a0a0a;color:#f4f2ee;font-family:'Manrope',sans-serif;-webkit-font-smoothing:antialiased}
@@ -26,20 +28,38 @@
   .logos-track>*{margin-right:48px}
   .logos-marquee:hover .logos-track{animation-play-state:paused}
   @keyframes logos-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  .grid-gallery{overflow-x:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent;padding-bottom:10px}
-  .grid-gallery::-webkit-scrollbar{height:6px}
-  .grid-gallery::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:3px}
-  .gallery-tile{flex:0 0 240px;height:440px;min-width:0;overflow:hidden;border-radius:12px;transition:flex-basis .45s ease}
-  .gallery-tile:hover{flex-basis:420px}
+  .gallery-carousel{display:flex;flex-direction:column;gap:14px}
+  .gallery-main{position:relative;overflow:hidden;border-radius:14px;background:#111}
+  .gallery-track{display:flex;width:100%;transition:transform .5s cubic-bezier(.16,.84,.44,1);touch-action:pan-y;cursor:grab}
+  .gallery-track.dragging{transition:none;cursor:grabbing}
+  .gallery-slide{flex:0 0 100%;width:100%;height:clamp(360px,58vw,620px)}
+  .gallery-slide img{width:100%;height:100%;object-fit:contain;display:block;-webkit-user-drag:none;user-select:none}
+  .gallery-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:999px;border:none;background:rgba(244,242,238,.85);color:#0a0a0a;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:22px;line-height:1;transition:opacity .2s ease,transform .2s ease,background .2s ease;z-index:2}
+  .gallery-nav:hover{background:#fff;transform:translateY(-50%) scale(1.08)}
+  .gallery-nav.is-disabled{opacity:.35;cursor:not-allowed;pointer-events:none}
+  .gallery-prev{left:16px}
+  .gallery-next{right:16px}
+  .gallery-thumbs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent;padding-bottom:6px}
+  .gallery-thumb{flex:0 0 auto;width:34px;height:76px;padding:0;border:none;border-radius:6px;overflow:hidden;cursor:pointer;opacity:.5;background:none;transition:width .35s cubic-bezier(.16,.84,.44,1),opacity .25s ease}
+  .gallery-thumb img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+  .gallery-thumb.is-active{width:112px;opacity:1}
   .card-hover{border-color:rgba(255,255,255,.08);border-style:solid;border-width:1px;transition:border-color .3s ease}
   .card-hover:hover{border-color:#f2c14e}
+  .reveal{opacity:0;transition:opacity .8s cubic-bezier(.16,.84,.44,1),transform .8s cubic-bezier(.16,.84,.44,1)}
+  .reveal-left{transform:translateX(-60px)}
+  .reveal-right{transform:translateX(60px)}
+  .reveal.is-visible{opacity:1;transform:translateX(0)}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{transition:none;opacity:1;transform:none}
+  }
   @media (max-width:1024px){
     .nav-desktop-links{display:none!important}
     .burger-btn{display:flex!important}
     .grid-portfolio{grid-template-columns:1fr!important}
     .grid-perks{grid-template-columns:repeat(2,1fr)!important}
-    .gallery-tile{flex-basis:200px;height:360px}
-    .gallery-tile:hover{flex-basis:320px}
+    .gallery-slide{height:clamp(320px,55vw,500px)}
+    .gallery-thumb{width:30px;height:68px}
+    .gallery-thumb.is-active{width:100px}
     header{padding:16px 24px!important}
   }
   @media (max-width:640px){
@@ -47,8 +67,12 @@
     .logos-track>*{margin-right:32px}
     .logos-track img{height:auto!important;max-height:80px;max-width:110px!important}
     .grid-about,.grid-services,.grid-tech,.grid-contact,.grid-perks{grid-template-columns:1fr!important;gap:32px!important}
-    .gallery-tile{flex-basis:170px;height:300px}
-    .gallery-tile:hover{flex-basis:250px}
+    .gallery-slide{height:clamp(280px,75vw,420px)}
+    .gallery-nav{width:36px;height:36px;font-size:17px}
+    .gallery-prev{left:10px}
+    .gallery-next{right:10px}
+    .gallery-thumb{width:26px;height:58px}
+    .gallery-thumb.is-active{width:80px}
     .grid-footer{grid-template-columns:1fr!important;gap:28px!important}
     section,.sec{padding-left:20px!important;padding-right:20px!important}
     .sec{padding-top:40px!important;padding-bottom:56px!important}
@@ -91,8 +115,8 @@
   </div>
 
   <!-- HERO -->
-  <section style="position:relative;min-height:680px;display:flex;align-items:center;overflow:hidden">
-    <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="hero-photo" shape="rect" src="./dsc06255-4-mrnjukhb-bnva.jpg" placeholder="Photo hero — portrait / tournage" style="position:absolute;inset:0;width:100%;height:100%;z-index:0" hint-size="100%,100%"></x-import>
+  <section class="reveal reveal-left" style="position:relative;min-height:680px;display:flex;align-items:center;overflow:hidden">
+    <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="hero-photo" shape="rect" src="./dsc06255-4-mrnjukhb-bnva-web.jpg" placeholder="Photo hero — portrait / tournage" style="position:absolute;inset:0;width:100%;height:100%;z-index:0" hint-size="100%,100%"></x-import>
     <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(180deg, rgba(10,10,10,.8), rgba(10,10,10,.4) 45%, rgba(10,10,10,.9));pointer-events:none"></div>
     <div class="hero-inner" style="position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:150px 48px;width:100%">
       <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(44px,7vw,96px);line-height:.98;margin:0;letter-spacing:-1px">
@@ -101,16 +125,16 @@
       </h1>
       <p style="margin:26px 0 0;font-size:clamp(17px,2vw,22px);font-weight:600;color:rgba(244,242,238,.95)">Vidéaste entreprise à Marseille, missions dans toute la France.</p>
       <p style="max-width:460px;margin:14px 0 32px;font-size:15px;line-height:1.7;color:rgba(244,242,238,.65)">10 ans d'expérience, plus de 150 projets réalisés pour des entreprises de tous secteurs. De la captation au montage final, un interlocuteur unique pour votre film corporate, événementiel ou contenu de marque. Livraison des premiers visuels (photo et teaser vidéo) sous 48h pour l'événementiel.</p>
-      <p style="margin:10px 0 0;font-size:13px;font-style:italic;color:rgba(244,242,238,.45)">Fait pour durer. Littéralement.</p>
+      <p style="margin:10px 0 0;font-size:13px;font-style:italic;color:rgba(244,242,238,.58)">Fait pour durer. Littéralement.</p>
       <a href="#contact" class="btn-tap" style="margin-top:20px;padding:14px 28px;border-radius:999px;background:#f4f2ee;color:#0a0a0a;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:8px">Nous contacter <span>↗</span></a>
     </div>
   </section>
 
   <!-- ABOUT -->
-  <section id="agence" class="sec" style="padding:60px 48px 120px">
+  <section id="agence" class="sec reveal reveal-right" style="padding:60px 48px 120px">
     <div class="grid-about" style="display:grid;grid-template-columns:1fr 1.2fr;gap:56px;align-items:center;max-width:1280px;margin:0 auto">
     <div style="aspect-ratio:4/3;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.08)">
-      <iframe src="https://www.youtube.com/embed/_pMn3SdzLoo" title="Showreel Perpette Production" style="width:100%;height:100%;border:0;display:block" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true"></iframe>
+      <iframe src="https://www.youtube-nocookie.com/embed/_pMn3SdzLoo" title="Showreel Perpette Production" loading="lazy" style="width:100%;height:100%;border:0;display:block" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true"></iframe>
     </div>
     <div>
       <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(28px,3.4vw,42px);margin:0 0 20px;line-height:1.1">Production vidéo pour entreprises,<br>basée à Marseille<span style="color:#f2c14e">.</span></h2>
@@ -122,7 +146,7 @@
   </section>
 
   <!-- SERVICES -->
-  <section id="prestations" class="sec" style="position:relative;padding:80px 48px;background-color:#0a0a0a;overflow:hidden">
+  <section id="prestations" class="sec reveal reveal-left" style="position:relative;padding:80px 48px;background-color:#0a0a0a;overflow:hidden">
     <div style="position:absolute;inset:0;z-index:0;opacity:.16">
       <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="prestations-bg-photo" shape="rect" placeholder="Photo de fond — tournage" style="width:100%;height:100%" hint-size="100%,100%"></x-import>
     </div>
@@ -152,7 +176,7 @@
   </div></section>
 
   <!-- PERKS -->
-  <section class="sec" style="padding:60px 48px 100px">
+  <section class="sec reveal reveal-right" style="padding:60px 48px 100px">
     <div style="max-width:1280px;margin:0 auto">
     <h2 style="font-family: 'Space Grotesk',sans-serif; font-weight: 700; font-size: clamp(32px,4vw,52px); margin: 0 0 40px; text-align: center">Pourquoi travailler avec Perpette Production<span style="color:#f2c14e">.</span></h2>
     <div class="grid-perks" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px">
@@ -169,7 +193,7 @@
   </section>
 
   <!-- PORTFOLIO -->
-  <section id="portfolio" class="sec" style="padding:80px 48px">
+  <section id="portfolio" class="sec reveal reveal-left" style="padding:80px 48px">
     <div style="max-width:1280px;margin:0 auto">
     <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(30px,3.6vw,44px);margin:0 0 30px;text-align:center">Des projets qui prennent forme<span style="color:#f2c14e">.</span></h2>
     <div style="display:flex;justify-content:center;gap:14px;margin-bottom:30px;flex-wrap:wrap">
@@ -180,17 +204,17 @@
     <div class="grid-portfolio card-hover" style="border-radius:18px;padding:44px;background:rgba(255,255,255,.02);display:grid;grid-template-columns:340px 1fr;gap:44px;align-items:center">
       <sc-if value="{{ isProject0 }}" hint-placeholder-val="{{ true }}">
         <div style="aspect-ratio:9/16;width:100%">
-          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="project-photo-speedy" shape="rect" radius="14" src="./uploads/SPEEDY.jpg" placeholder="Photo — Projet 01 Speedy" style="border:1px solid rgba(255,255,255,.08)" hint-size="100%,100%"></x-import>
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="project-photo-speedy" shape="rect" radius="14" src="./uploads/SPEEDY-web.jpg" placeholder="Photo — Projet 01 Speedy" style="border:1px solid rgba(255,255,255,.08)" hint-size="100%,100%"></x-import>
         </div>
       </sc-if>
       <sc-if value="{{ isProject1 }}" hint-placeholder-val="{{ false }}">
         <div style="aspect-ratio:9/16;width:100%">
-          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="project-photo-apothicaires" shape="rect" radius="14" src="./uploads/APOTHICAL.jpg" placeholder="Photo — Projet 02 Apothicaires" style="border:1px solid rgba(255,255,255,.08)" hint-size="100%,100%"></x-import>
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="project-photo-apothicaires" shape="rect" radius="14" src="./uploads/APOTHICAL-web.jpg" placeholder="Photo — Projet 02 Apothicaires" style="border:1px solid rgba(255,255,255,.08)" hint-size="100%,100%"></x-import>
         </div>
       </sc-if>
       <sc-if value="{{ isProject2 }}" hint-placeholder-val="{{ false }}">
         <div style="aspect-ratio:9/16;width:100%">
-          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="project-photo-bmx" shape="rect" radius="14" src="./uploads/BMX.jpg" placeholder="Photo — Projet 03 BMX" style="border:1px solid rgba(255,255,255,.08)" hint-size="100%,100%"></x-import>
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="project-photo-bmx" shape="rect" radius="14" src="./uploads/BMX-web.jpg" placeholder="Photo — Projet 03 BMX" style="border:1px solid rgba(255,255,255,.08)" hint-size="100%,100%"></x-import>
         </div>
       </sc-if>
       <div>
@@ -204,19 +228,30 @@
   </section>
 
   <!-- GALERIE PHOTO (nouvelle section) -->
-  <section class="sec" style="padding:20px 48px 100px">
+  <section class="sec reveal reveal-right" style="padding:20px 48px 100px">
     <div style="max-width:1280px;margin:0 auto">
     <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(28px,3.4vw,40px);margin:0 0 30px">Nos tournages en images<span style="color:#f2c14e">.</span></h2>
-    <div class="grid-gallery" style="display:flex;flex-wrap:nowrap;gap:14px">
-      <sc-for list="{{ galleryPhotos }}" as="g" hint-placeholder-count="10">
-        <div class="gallery-tile card-hover"><x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ g.id }}" shape="rect" radius="12" src="{{ g.src }}" placeholder="Photo — tournage" style="width:100%;height:100%;display:block" hint-size="100%,100%"></x-import></div>
-      </sc-for>
+    <div class="gallery-carousel">
+      <div class="gallery-main" id="gallery-main">
+        <div class="gallery-track" id="gallery-track" style="{{ galleryTrackStyle }}">
+          <sc-for list="{{ galleryPhotos }}" as="g" hint-placeholder-count="10">
+            <div class="gallery-slide"><img src="{{ g.src }}" alt="{{ g.alt }}" draggable="false"></div>
+          </sc-for>
+        </div>
+        <button type="button" class="gallery-nav gallery-prev {{ galleryPrevClass }}" onClick="{{ galleryPrev }}" aria-label="Photo précédente">‹</button>
+        <button type="button" class="gallery-nav gallery-next {{ galleryNextClass }}" onClick="{{ galleryNext }}" aria-label="Photo suivante">›</button>
+      </div>
+      <div class="gallery-thumbs" id="gallery-thumbs">
+        <sc-for list="{{ galleryPhotos }}" as="g" hint-placeholder-count="10">
+          <button type="button" class="gallery-thumb {{ g.activeClass }}" onClick="{{ g.select }}" aria-label="{{ g.alt }}"><img src="{{ g.src }}" alt="" draggable="false"></button>
+        </sc-for>
+      </div>
     </div>
     </div>
   </section>
 
   <!-- TECH MEANS (avec photo en arrière-plan) -->
-  <section class="sec" style="position:relative;padding:60px 48px 100px;background-color:#0a0a0a;overflow:hidden">
+  <section class="sec reveal reveal-left" style="position:relative;padding:60px 48px 100px;background-color:#0a0a0a;overflow:hidden">
     <div style="position:absolute;inset:0;z-index:0;opacity:.22">
       <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="tech-bg-photo" shape="rect" placeholder="Photo de fond — matériel / tournage" style="width:100%;height:100%" hint-size="100%,100%"></x-import>
     </div>
@@ -235,7 +270,7 @@
   </section>
 
   <!-- REFERENCES / CLIENTS (avec photo en arrière-plan) -->
-  <section id="references" class="sec" style="position:relative;padding:20px 48px 100px;overflow:hidden">
+  <section id="references" class="sec reveal reveal-right" style="position:relative;padding:20px 48px 100px;overflow:hidden">
     <div style="position:absolute;inset:0;z-index:0;opacity:.18">
       <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="references-bg-photo" shape="rect" placeholder="Photo de fond — équipe / clients" style="width:100%;height:100%" hint-size="100%,100%"></x-import>
     </div>
@@ -247,10 +282,10 @@
     <div class="logos-marquee">
       <div class="logos-track">
         <sc-for list="{{ clientLogos }}" as="c" hint-placeholder-count="12">
-          <img src="{{ c.src }}" alt="{{ c.name }}" style="height:{{ c.h }}px;width:auto;max-width:150px;object-fit:contain;filter:brightness(0) invert(1);opacity:.65;flex-shrink:0">
+          <img src="{{ c.src }}" alt="{{ c.name }}" width="{{ c.w }}" height="{{ c.h }}" style="height:{{ c.h }}px;width:auto;max-width:150px;object-fit:contain;filter:brightness(0) invert(1);opacity:.65;flex-shrink:0">
         </sc-for>
         <sc-for list="{{ clientLogos }}" as="c" hint-placeholder-count="12">
-          <img aria-hidden="true" src="{{ c.src }}" alt="" style="height:{{ c.h }}px;width:auto;max-width:150px;object-fit:contain;filter:brightness(0) invert(1);opacity:.65;flex-shrink:0">
+          <img aria-hidden="true" src="{{ c.src }}" alt="" width="{{ c.w }}" height="{{ c.h }}" style="height:{{ c.h }}px;width:auto;max-width:150px;object-fit:contain;filter:brightness(0) invert(1);opacity:.65;flex-shrink:0">
         </sc-for>
       </div>
     </div>
@@ -259,7 +294,7 @@
   </section>
 
   <!-- FAQ -->
-  <section id="faq" class="sec" style="padding:60px 48px 100px">
+  <section id="faq" class="sec reveal reveal-left" style="padding:60px 48px 100px">
     <div style="max-width:840px;margin:0 auto">
     <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(30px,3.6vw,44px);margin:0 0 30px;text-align:center">Questions fréquentes<span style="color:#f2c14e">.</span></h2>
     <div style="border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:12px;background:rgba(255,255,255,.02)">
@@ -279,15 +314,15 @@
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="sec" style="padding:110px 48px 90px;border-top:1px solid rgba(255,255,255,.06)">
+  <section id="contact" class="sec reveal reveal-right" style="padding:110px 48px 90px;border-top:1px solid rgba(255,255,255,.06)">
     <div class="grid-contact" style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start">
       <div>
-        <p style="font-size:12px;letter-spacing:4px;color:rgba(244,242,238,.45);margin:0 0 22px;font-family:ui-monospace,monospace">PARLONS-EN</p>
+        <p style="font-size:12px;letter-spacing:4px;color:rgba(244,242,238,.58);margin:0 0 22px;font-family:ui-monospace,monospace">PARLONS-EN</p>
         <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(34px,4.6vw,56px);margin:0 0 24px;line-height:1.05">Un projet en tête<span style="color:#f2c14e">?</span></h2>
         <p style="font-size:15px;line-height:1.7;color:rgba(244,242,238,.55);max-width:400px;margin:0 0 32px">Dites-nous ce que vous voulez raconter. Nous revenons vers vous sous 48h avec une piste et un budget.</p>
         <a href="mailto:contact@clementmirlocca.fr" style="display:block;font-size:16px;font-weight:600;color:#f4f2ee;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.15);max-width:400px;margin-bottom:18px">contact@clementmirlocca.fr</a>
         
-        <p style="font-size:13.5px;color:rgba(244,242,238,.4);margin:0">France · @perpette.production</p>
+        <p style="font-size:13.5px;color:rgba(244,242,238,.58);margin:0">France · @perpette.production</p>
       </div>
       <form onSubmit="{{ onSubmit }}" style="display:flex;flex-direction:column;gap:26px">
         <input type="hidden" name="_subject" value="Nouveau message depuis le site Perpette Production">
@@ -295,16 +330,16 @@
         <input type="hidden" name="_captcha" value="false">
         <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
         <div>
-          <label style="display:block;font-size:11px;letter-spacing:2px;color:rgba(244,242,238,.4);margin-bottom:10px;font-family:ui-monospace,monospace">NOM</label>
-          <input type="text" name="name" required placeholder="Prénom Nom" style="width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.18);color:#f4f2ee;font-size:16px;padding:0 0 12px;outline:none;font-family:'Manrope',sans-serif">
+          <label for="contact-name" style="display:block;font-size:11px;letter-spacing:2px;color:rgba(244,242,238,.58);margin-bottom:10px;font-family:ui-monospace,monospace">NOM</label>
+          <input id="contact-name" type="text" name="name" required placeholder="Prénom Nom" style="width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.18);color:#f4f2ee;font-size:16px;padding:0 0 12px;outline:none;font-family:'Manrope',sans-serif">
         </div>
         <div>
-          <label style="display:block;font-size:11px;letter-spacing:2px;color:rgba(244,242,238,.4);margin-bottom:10px;font-family:ui-monospace,monospace">EMAIL</label>
-          <input type="email" name="email" required placeholder="vous@studio.com" style="width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.18);color:#f4f2ee;font-size:16px;padding:0 0 12px;outline:none;font-family:'Manrope',sans-serif">
+          <label for="contact-email" style="display:block;font-size:11px;letter-spacing:2px;color:rgba(244,242,238,.58);margin-bottom:10px;font-family:ui-monospace,monospace">EMAIL</label>
+          <input id="contact-email" type="email" name="email" required placeholder="vous@studio.com" style="width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.18);color:#f4f2ee;font-size:16px;padding:0 0 12px;outline:none;font-family:'Manrope',sans-serif">
         </div>
         <div>
-          <label style="display:block;font-size:11px;letter-spacing:2px;color:rgba(244,242,238,.4);margin-bottom:10px;font-family:ui-monospace,monospace">TYPE DE PROJET</label>
-          <select name="type_de_projet" required style="width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.18);color:#f4f2ee;font-size:16px;padding:0 0 12px;outline:none;font-family:'Manrope',sans-serif">
+          <label for="contact-type" style="display:block;font-size:11px;letter-spacing:2px;color:rgba(244,242,238,.58);margin-bottom:10px;font-family:ui-monospace,monospace">TYPE DE PROJET</label>
+          <select id="contact-type" name="type_de_projet" required style="width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.18);color:#f4f2ee;font-size:16px;padding:0 0 12px;outline:none;font-family:'Manrope',sans-serif">
             <option value="" disabled selected style="background:#0a0a0a">— Choisir un type de projet —</option>
             <option style="background:#0a0a0a">Vidéo corporate</option>
             <option style="background:#0a0a0a">Film événementiel</option>
@@ -315,8 +350,8 @@
           </select>
         </div>
         <div>
-          <label style="display:block;font-size:11px;letter-spacing:2px;color:rgba(244,242,238,.4);margin-bottom:10px;font-family:ui-monospace,monospace">MESSAGE</label>
-          <textarea name="message" required placeholder="Décrivez votre projet, vos échéances…" rows="5" style="width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.18);color:#f4f2ee;font-size:16px;padding:0 0 12px;outline:none;resize:vertical;font-family:'Manrope',sans-serif"></textarea>
+          <label for="contact-message" style="display:block;font-size:11px;letter-spacing:2px;color:rgba(244,242,238,.58);margin-bottom:10px;font-family:ui-monospace,monospace">MESSAGE</label>
+          <textarea id="contact-message" name="message" required placeholder="Décrivez votre projet, vos échéances…" rows="5" style="width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.18);color:#f4f2ee;font-size:16px;padding:0 0 12px;outline:none;resize:vertical;font-family:'Manrope',sans-serif"></textarea>
         </div>
         <button type="submit" class="btn-tap" style="margin-top:8px;padding:16px;border:none;border-radius:8px;background:#f2c14e;color:#0a0a0a;font-weight:700;font-size:15px;cursor:pointer">{{ submitLabel }}</button>
       </form>
@@ -328,13 +363,13 @@
     <div class="grid-footer" style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;padding-top:40px;border-top:1px solid rgba(255,255,255,.08)">
       <div>
         <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;margin-bottom:14px"><span style="color:#f4f2ee">PERP</span><span style="color:#f2c14e">ETTE</span> <span style="font-weight:500;color:rgba(244,242,238,.5)">Production</span></div>
-        <p style="font-size:13.5px;line-height:1.6;margin:0 0 6px"><a href="mailto:contact@clementmirlocca.fr" style="color:rgba(244,242,238,.45)">contact@clementmirlocca.fr</a></p>
-        <p style="font-size:13.5px;line-height:1.6;margin:0 0 6px"><a href="tel:+33669626972" style="color:rgba(244,242,238,.45)">06 69 62 69 72</a></p>
-        <p style="font-size:13.5px;color:rgba(244,242,238,.45);line-height:1.6;margin:0 0 14px">France</p>
-        <p style="font-size:13px;font-style:italic;color:rgba(244,242,238,.4);margin:0">Fait pour durer. Littéralement.</p>
+        <p style="font-size:13.5px;line-height:1.6;margin:0 0 6px"><a href="mailto:contact@clementmirlocca.fr" style="color:rgba(244,242,238,.58)">contact@clementmirlocca.fr</a></p>
+        <p style="font-size:13.5px;line-height:1.6;margin:0 0 6px"><a href="tel:+33669626972" style="color:rgba(244,242,238,.58)">06 69 62 69 72</a></p>
+        <p style="font-size:13.5px;color:rgba(244,242,238,.58);line-height:1.6;margin:0 0 14px">France</p>
+        <p style="font-size:13px;font-style:italic;color:rgba(244,242,238,.58);margin:0">Fait pour durer. Littéralement.</p>
       </div>
       <div>
-        <h4 style="font-size:14px;margin:0 0 16px">Navigation</h4>
+        <h3 style="font-size:14px;margin:0 0 16px">Navigation</h3>
         <div style="display:flex;flex-direction:column;gap:10px;font-size:13.5px">
           <a href="#prestations" style="color:rgba(244,242,238,.6)">Prestations</a>
           <a href="#portfolio" style="color:rgba(244,242,238,.6)">Portfolio</a>
@@ -343,7 +378,7 @@
         </div>
       </div>
       <div>
-        <h4 style="font-size:14px;margin:0 0 16px">Réseaux</h4>
+        <h3 style="font-size:14px;margin:0 0 16px">Réseaux</h3>
         <div style="display:flex;flex-direction:column;gap:10px;font-size:13.5px">
           <a href="https://www.instagram.com/clement_mirlocca/" target="_blank" rel="noopener" style="color:rgba(244,242,238,.6)">Instagram</a>
           <a href="https://www.linkedin.com/in/cl%C3%A9ment-mirlocca-a73097168/" target="_blank" rel="noopener" style="color:rgba(244,242,238,.6)">LinkedIn</a>
@@ -351,7 +386,7 @@
         </div>
       </div>
     </div>
-    <div style="max-width:1280px;margin:40px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.06);font-size:12px;color:rgba(244,242,238,.3);text-align:center">© 2026 Perpette Production. Tous droits réservés.</div>
+    <div style="max-width:1280px;margin:40px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.06);font-size:12px;color:rgba(244,242,238,.58);text-align:center">© 2026 Perpette Production. Tous droits réservés.</div>
   </footer>
 
 </div>
@@ -368,7 +403,8 @@ class Component extends DCLogic {
     sending: false,
     sendError: false,
     activeSection: 'agence',
-    menuOpen: false
+    menuOpen: false,
+    galleryIndex: 0
   };
 
   navData = [
@@ -386,10 +422,94 @@ class Component extends DCLogic {
       });
     }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
     sections.forEach(s => this.observer.observe(s));
+
+    this.revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          this.revealObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+    document.querySelectorAll('.reveal').forEach(el => this.revealObserver.observe(el));
+
+    const galleryMain = document.getElementById('gallery-main');
+    const galleryTrack = document.getElementById('gallery-track');
+    if (galleryMain && galleryTrack) {
+      let dragging = false;
+      let startX = 0;
+      let currentX = 0;
+      let startTime = 0;
+
+      const onPointerDown = (e) => {
+        if (e.target.closest('.gallery-nav')) return;
+        dragging = true;
+        startX = e.clientX;
+        currentX = 0;
+        startTime = Date.now();
+        galleryTrack.classList.add('dragging');
+        if (galleryMain.setPointerCapture) galleryMain.setPointerCapture(e.pointerId);
+      };
+
+      const onPointerMove = (e) => {
+        if (!dragging) return;
+        currentX = e.clientX - startX;
+        const containerWidth = galleryMain.offsetWidth || 1;
+        const baseOffset = -this.state.galleryIndex * containerWidth;
+        galleryTrack.style.transform = `translateX(${baseOffset + currentX}px)`;
+      };
+
+      const endDrag = () => {
+        if (!dragging) return;
+        dragging = false;
+        galleryTrack.classList.remove('dragging');
+        const containerWidth = galleryMain.offsetWidth || 1;
+        const elapsed = Math.max(Date.now() - startTime, 1);
+        const velocity = (currentX / elapsed) * 1000;
+        let newIndex = this.state.galleryIndex;
+        if (Math.abs(velocity) > 500) {
+          newIndex += velocity > 0 ? -1 : 1;
+        } else if (Math.abs(currentX) > containerWidth * 0.22) {
+          newIndex += currentX > 0 ? -1 : 1;
+        }
+        galleryTrack.style.transform = '';
+        this.goToGallerySlide(newIndex);
+      };
+
+      galleryMain.addEventListener('pointerdown', onPointerDown);
+      galleryMain.addEventListener('pointermove', onPointerMove);
+      galleryMain.addEventListener('pointerup', endDrag);
+      galleryMain.addEventListener('pointerleave', endDrag);
+      galleryMain.addEventListener('pointercancel', endDrag);
+
+      this.galleryCleanup = () => {
+        galleryMain.removeEventListener('pointerdown', onPointerDown);
+        galleryMain.removeEventListener('pointermove', onPointerMove);
+        galleryMain.removeEventListener('pointerup', endDrag);
+        galleryMain.removeEventListener('pointerleave', endDrag);
+        galleryMain.removeEventListener('pointercancel', endDrag);
+      };
+    }
   }
 
   componentWillUnmount() {
     if (this.observer) this.observer.disconnect();
+    if (this.revealObserver) this.revealObserver.disconnect();
+    if (this.galleryCleanup) this.galleryCleanup();
+  }
+
+  goToGallerySlide(i) {
+    const count = this.galleryPhotoData.length;
+    const clamped = Math.max(0, Math.min(count - 1, i));
+    this.setState({ galleryIndex: clamped });
+    requestAnimationFrame(() => {
+      const thumbs = document.getElementById('gallery-thumbs');
+      const activeThumb = thumbs && thumbs.children[clamped];
+      if (thumbs && activeThumb) {
+        const target = activeThumb.offsetLeft - thumbs.offsetWidth / 2 + activeThumb.offsetWidth / 2;
+        thumbs.scrollTo({ left: target, behavior: 'smooth' });
+      }
+    });
   }
 
   serviceData = [
@@ -426,21 +546,21 @@ class Component extends DCLogic {
   galleryPhotoData = [
     '9A2A0444-ab8832c7','A7407712-15cb51af','DSC02717-7755ab20','DSC05934-3-2783f649','DSC06134-2-d3f70faa',
     'DSC08641-a5bd9b1b','Free_pro_-_mai-04-9873502d','Free_pro_-_mai-21-62bd39e0','Free_pro_-_mai-71-bf9149ff','Free_pro_-_mai-73-8f5ceb2c'
-  ].map(n => ({ id: 'gallery-' + n.toLowerCase().replace(/[^a-z0-9]/g, ''), src: `./uploads/${n}.jpg` }));
+  ].map((n, i) => ({ id: 'gallery-' + n.toLowerCase().replace(/[^a-z0-9]/g, ''), src: `./uploads/${n}-web.jpg`, alt: `Photo tournage ${i + 1}` }));
 
   clientLogoData = [
-    { name: 'Apothicaires', src: './assets/logo-apothicaires.png', h: 138 },
-    { name: 'Casino', src: './assets/logo-casino.svg', h: 90 },
-    { name: 'Free Pro', src: './assets/logo-freepro.webp', h: 102 },
-    { name: 'KoRo', src: './assets/logo-koro.png', h: 120 },
-    { name: 'Z5', src: './assets/logo-z5.webp', h: 126 },
-    { name: 'Speedy', src: './assets/logo-speedy.svg', h: 96 },
-    { name: 'Conserto', src: './assets/logo-conserto.png', h: 120 },
-    { name: 'Flow Events Agency', src: './assets/logo-flow.png', h: 132 },
-    { name: 'Syndeac', src: './assets/logo-syndeac.png', h: 108 },
-    { name: 'Aligneurs Français', src: './assets/logo-aligneurs.png', h: 96 },
-    { name: 'Ensol', src: './assets/logo-ensol2.png', h: 100 },
-    { name: 'Spar', src: './assets/logo-spar2.png', h: 90 }
+    { name: 'Apothicaires', src: './assets/logo-apothicaires.png', h: 138, w: 234 },
+    { name: 'Casino', src: './assets/logo-casino.svg', h: 90, w: 331 },
+    { name: 'Free Pro', src: './assets/logo-freepro.webp', h: 102, w: 495 },
+    { name: 'KoRo', src: './assets/logo-koro-web.png', h: 120, w: 170 },
+    { name: 'Z5', src: './assets/logo-z5.webp', h: 126, w: 126 },
+    { name: 'Speedy', src: './assets/logo-speedy.svg', h: 96, w: 294 },
+    { name: 'Conserto', src: './assets/logo-conserto.png', h: 120, w: 101 },
+    { name: 'Flow Events Agency', src: './assets/logo-flow.png', h: 132, w: 188 },
+    { name: 'Syndeac', src: './assets/logo-syndeac.png', h: 108, w: 249 },
+    { name: 'Aligneurs Français', src: './assets/logo-aligneurs.png', h: 96, w: 392 },
+    { name: 'Ensol', src: './assets/logo-ensol.webp', h: 100, w: 100 },
+    { name: 'Spar', src: './assets/logo-spar.webp', h: 90, w: 565 }
   ];
 
   renderVals() {
@@ -484,8 +604,21 @@ class Component extends DCLogic {
     const drawerStyle = `position:fixed;top:0;right:0;bottom:0;width:min(320px,80vw);background:#0a0a0a;z-index:60;padding:96px 28px 28px;border-left:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;transform:${menuOpen ? 'translateX(0)' : 'translateX(100%)'};transition:transform .3s ease`;
     const backdropStyle = `position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:55;opacity:${menuOpen ? 1 : 0};pointer-events:${menuOpen ? 'auto' : 'none'};transition:opacity .3s ease`;
 
+    const galleryIdx = this.state.galleryIndex;
+    const galleryCount = this.galleryPhotoData.length;
+    const galleryPhotos = this.galleryPhotoData.map((g, i) => ({
+      ...g,
+      activeClass: i === galleryIdx ? 'is-active' : '',
+      select: () => this.goToGallerySlide(i)
+    }));
+
     return {
-      galleryPhotos: this.galleryPhotoData,
+      galleryPhotos,
+      galleryTrackStyle: `transform:translateX(-${galleryIdx * 100}%)`,
+      galleryPrevClass: galleryIdx === 0 ? 'is-disabled' : '',
+      galleryNextClass: galleryIdx === galleryCount - 1 ? 'is-disabled' : '',
+      galleryPrev: () => this.goToGallerySlide(galleryIdx - 1),
+      galleryNext: () => this.goToGallerySlide(galleryIdx + 1),
       navLinks,
       menuIcon: menuOpen ? '✕' : '☰',
       toggleMenu: () => this.setState({ menuOpen: !menuOpen }),

@@ -28,23 +28,27 @@
   .logos-track>*{margin-right:48px}
   .logos-marquee:hover .logos-track{animation-play-state:paused}
   @keyframes logos-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  .gallery-carousel{display:flex;flex-direction:column;gap:14px}
-  .gallery-main{position:relative;overflow:hidden;border-radius:14px;background:#111}
-  .gallery-track{display:flex;width:100%;transition:transform .5s cubic-bezier(.16,.84,.44,1);touch-action:pan-y;cursor:grab}
-  .gallery-track.dragging{transition:none;cursor:grabbing}
-  .gallery-slide{flex:0 0 100%;width:100%;height:clamp(360px,58vw,620px)}
-  .gallery-slide img{width:100%;height:100%;object-fit:contain;display:block;-webkit-user-drag:none;user-select:none}
-  .gallery-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:999px;border:none;background:rgba(244,242,238,.85);color:#0a0a0a;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:22px;line-height:1;transition:opacity .2s ease,transform .2s ease,background .2s ease;z-index:2}
-  .gallery-nav:hover{background:#fff;transform:translateY(-50%) scale(1.08)}
-  .gallery-nav.is-disabled{opacity:.35;cursor:not-allowed;pointer-events:none}
-  .gallery-prev{left:16px}
-  .gallery-next{right:16px}
-  .gallery-thumbs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent;padding-bottom:6px}
-  .gallery-thumb{flex:0 0 auto;width:34px;height:76px;padding:0;border:none;border-radius:6px;overflow:hidden;cursor:pointer;opacity:.5;background:none;transition:width .35s cubic-bezier(.16,.84,.44,1),opacity .25s ease}
-  .gallery-thumb img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
-  .gallery-thumb.is-active{width:112px;opacity:1}
   .card-hover{border-color:rgba(255,255,255,.08);border-style:solid;border-width:1px;transition:border-color .3s ease}
   .card-hover:hover{border-color:#f2c14e}
+  .grid-gallery-item{position:relative;display:block;width:100%;padding:0;margin:0;border:none;background:none;cursor:pointer;border-radius:14px;overflow:hidden;aspect-ratio:1/1}
+  .grid-gallery-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s cubic-bezier(.16,.84,.44,1)}
+  .grid-gallery-item:hover img,.grid-gallery-item:focus-visible img{transform:scale(1.08)}
+  .grid-gallery-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:rgba(10,10,10,.65);backdrop-filter:blur(2px);opacity:0;transition:opacity .25s ease;padding:16px;text-align:center}
+  .grid-gallery-item:hover .grid-gallery-overlay,.grid-gallery-item:focus-visible .grid-gallery-overlay{opacity:1}
+  .grid-gallery-zoom{font-size:22px;color:#f2c14e;line-height:1}
+  .grid-gallery-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:#f4f2ee}
+  .grid-gallery-badge{font-size:11px;font-weight:600;letter-spacing:.4px;padding:4px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.25);color:#f4f2ee}
+  .lightbox-overlay{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;padding:24px}
+  .lightbox-content{position:relative;max-width:min(900px,90vw);max-height:88vh;display:flex;flex-direction:column;align-items:center;gap:16px}
+  .lightbox-content img{max-width:100%;max-height:70vh;border-radius:12px;display:block;object-fit:contain}
+  .lightbox-caption{text-align:center}
+  .lightbox-caption h3{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:700;margin:0 0 8px}
+  .lightbox-close{position:absolute;top:-52px;right:0;width:40px;height:40px;border-radius:999px;border:none;background:rgba(244,242,238,.1);color:#f4f2ee;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s ease}
+  .lightbox-close:hover{background:rgba(244,242,238,.2)}
+  .lightbox-nav{position:fixed;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:999px;border:none;background:rgba(244,242,238,.1);color:#f4f2ee;font-size:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s ease;z-index:71}
+  .lightbox-nav:hover{background:rgba(244,242,238,.2)}
+  .lightbox-prev{left:24px}
+  .lightbox-next{right:24px}
   .reveal{opacity:0;transition:opacity .8s cubic-bezier(.16,.84,.44,1),transform .8s cubic-bezier(.16,.84,.44,1)}
   .reveal-left{transform:translateX(-60px)}
   .reveal-right{transform:translateX(60px)}
@@ -55,11 +59,8 @@
   @media (max-width:1024px){
     .nav-desktop-links{display:none!important}
     .burger-btn{display:flex!important}
-    .grid-portfolio{grid-template-columns:1fr!important}
     .grid-perks{grid-template-columns:repeat(2,1fr)!important}
-    .gallery-slide{height:clamp(320px,55vw,500px)}
-    .gallery-thumb{width:30px;height:68px}
-    .gallery-thumb.is-active{width:100px}
+    .grid-gallery{grid-template-columns:repeat(2,1fr)!important}
     header{padding:16px 24px!important}
   }
   @media (max-width:640px){
@@ -67,20 +68,18 @@
     .logos-track>*{margin-right:32px}
     .logos-track img{height:auto!important;max-height:80px;max-width:110px!important}
     .grid-about,.grid-services,.grid-tech,.grid-contact,.grid-perks{grid-template-columns:1fr!important;gap:32px!important}
-    .gallery-slide{height:clamp(280px,75vw,420px)}
-    .gallery-nav{width:36px;height:36px;font-size:17px}
-    .gallery-prev{left:10px}
-    .gallery-next{right:10px}
-    .gallery-thumb{width:26px;height:58px}
-    .gallery-thumb.is-active{width:80px}
+    .grid-gallery{grid-template-columns:1fr!important}
+    .lightbox-nav{width:38px;height:38px;font-size:18px}
+    .lightbox-prev{left:10px}
+    .lightbox-next{right:10px}
+    .lightbox-close{top:-44px}
+    .lightbox-content img{max-height:60vh}
     .grid-footer{grid-template-columns:1fr!important;gap:28px!important}
     section,.sec{padding-left:20px!important;padding-right:20px!important}
     .sec{padding-top:40px!important;padding-bottom:56px!important}
     header{padding-left:16px!important;padding-right:16px!important}
     .hero-inner{padding:90px 20px 70px!important}
     section:first-of-type{min-height:78vh!important}
-    .grid-portfolio{padding:22px!important;gap:26px!important}
-    .grid-portfolio>sc-if>div,.grid-portfolio>div:first-child{max-width:300px;margin:0 auto}
     #contact.sec{padding-top:70px!important}
   }
 </style>
@@ -192,62 +191,43 @@
     </div>
   </section>
 
-  <!-- PORTFOLIO -->
-  <section id="portfolio" class="sec reveal reveal-left" style="padding:80px 48px">
+  <!-- GALERIE PORTFOLIO (grille filtrable + lightbox) -->
+  <section id="galerie" class="sec reveal reveal-right" style="padding:20px 48px 60px">
     <div style="max-width:1280px;margin:0 auto">
-    <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(30px,3.6vw,44px);margin:0 0 30px;text-align:center">Des projets qui prennent forme<span style="color:#f2c14e">.</span></h2>
-    <div style="display:flex;justify-content:center;gap:14px;margin-bottom:30px;flex-wrap:wrap">
-      <sc-for list="{{ projects }}" as="proj" hint-placeholder-count="3">
-        <button class="tab-btn btn-tap" onClick="{{ proj.select }}" style="{{ proj.tabStyle }}">{{ proj.icon }} {{ proj.name }}</button>
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(28px,3.4vw,40px);margin:0 0 30px;text-align:center">Notre galerie<span style="color:#f2c14e">.</span></h2>
+    <div style="display:flex;justify-content:center;gap:10px;margin-bottom:30px;flex-wrap:wrap" role="group" aria-label="Filtrer la galerie par catégorie">
+      <sc-for list="{{ gridCategoryTabs }}" as="c" hint-placeholder-count="4">
+        <button type="button" class="btn-tap" onClick="{{ c.select }}" aria-pressed="{{ c.active }}" style="{{ c.tabStyle }}">{{ c.name }}</button>
       </sc-for>
     </div>
-    <div class="grid-portfolio card-hover" style="border-radius:18px;padding:44px;background:rgba(255,255,255,.02);display:grid;grid-template-columns:340px 1fr;gap:44px;align-items:center">
-      <sc-if value="{{ isProject0 }}" hint-placeholder-val="{{ true }}">
-        <div style="aspect-ratio:9/16;width:100%">
-          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="project-photo-speedy" shape="rect" radius="14" src="./uploads/SPEEDY-web.jpg" placeholder="Photo — Projet 01 Speedy" style="border:1px solid rgba(255,255,255,.08)" hint-size="100%,100%"></x-import>
-        </div>
-      </sc-if>
-      <sc-if value="{{ isProject1 }}" hint-placeholder-val="{{ false }}">
-        <div style="aspect-ratio:9/16;width:100%">
-          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="project-photo-apothicaires" shape="rect" radius="14" src="./uploads/APOTHICAL-web.jpg" placeholder="Photo — Projet 02 Apothicaires" style="border:1px solid rgba(255,255,255,.08)" hint-size="100%,100%"></x-import>
-        </div>
-      </sc-if>
-      <sc-if value="{{ isProject2 }}" hint-placeholder-val="{{ false }}">
-        <div style="aspect-ratio:9/16;width:100%">
-          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="project-photo-bmx" shape="rect" radius="14" src="./uploads/BMX-web.jpg" placeholder="Photo — Projet 03 BMX" style="border:1px solid rgba(255,255,255,.08)" hint-size="100%,100%"></x-import>
-        </div>
-      </sc-if>
-      <div>
-        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;margin:0 0 18px">{{ activeProject.title }}</h3>
-        <p style="font-size:14.5px;line-height:1.75;color:rgba(244,242,238,.6);margin:0 0 14px">{{ activeProject.p1 }}</p>
-        <p style="font-size:14.5px;line-height:1.75;color:rgba(244,242,238,.6);margin:0 0 24px">{{ activeProject.p2 }}</p>
-        <a href="#contact" class="btn-tap" style="padding:12px 22px;border-radius:999px;border:1px solid rgba(255,255,255,.18);font-weight:600;font-size:14px;color:#f4f2ee;display:inline-flex;align-items:center">Contact</a>
-      </div>
+    <div class="grid-gallery" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px" role="list" aria-label="Photos de la galerie">
+      <sc-for list="{{ filteredGridPhotos }}" as="g" hint-placeholder-count="9">
+        <button type="button" class="grid-gallery-item card-hover btn-tap" onClick="{{ g.open }}" role="listitem" aria-label="Voir la photo en grand — {{ g.title }}">
+          <img src="{{ g.src }}" alt="{{ g.title }}" loading="lazy">
+          <span class="grid-gallery-overlay" aria-hidden="true">
+            <span class="grid-gallery-zoom">⊕</span>
+            <span class="grid-gallery-title">{{ g.title }}</span>
+            <span class="grid-gallery-badge">{{ g.category }}</span>
+          </span>
+        </button>
+      </sc-for>
     </div>
     </div>
-  </section>
 
-  <!-- GALERIE PHOTO (nouvelle section) -->
-  <section class="sec reveal reveal-right" style="padding:20px 48px 100px">
-    <div style="max-width:1280px;margin:0 auto">
-    <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(28px,3.4vw,40px);margin:0 0 30px">Nos tournages en images<span style="color:#f2c14e">.</span></h2>
-    <div class="gallery-carousel">
-      <div class="gallery-main" id="gallery-main">
-        <div class="gallery-track" id="gallery-track" style="{{ galleryTrackStyle }}">
-          <sc-for list="{{ galleryPhotos }}" as="g" hint-placeholder-count="10">
-            <div class="gallery-slide"><img src="{{ g.src }}" alt="{{ g.alt }}" draggable="false"></div>
-          </sc-for>
+    <sc-if value="{{ lightboxOpen }}" hint-placeholder-val="{{ false }}">
+      <div class="lightbox-overlay" onClick="{{ closeLightbox }}" role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
+        <button type="button" class="lightbox-close btn-tap" onClick="{{ closeLightbox }}" aria-label="Fermer">✕</button>
+        <button type="button" class="lightbox-nav lightbox-prev btn-tap" onClick="{{ lightboxPrev }}" aria-label="Photo précédente">‹</button>
+        <button type="button" class="lightbox-nav lightbox-next btn-tap" onClick="{{ lightboxNext }}" aria-label="Photo suivante">›</button>
+        <div class="lightbox-content" onClick="{{ stopPropagation }}">
+          <img src="{{ lightboxPhoto.src }}" alt="{{ lightboxPhoto.title }}">
+          <div class="lightbox-caption">
+            <h3 id="lightbox-title">{{ lightboxPhoto.title }}</h3>
+            <span class="grid-gallery-badge">{{ lightboxPhoto.category }}</span>
+          </div>
         </div>
-        <button type="button" class="gallery-nav gallery-prev {{ galleryPrevClass }}" onClick="{{ galleryPrev }}" aria-label="Photo précédente">‹</button>
-        <button type="button" class="gallery-nav gallery-next {{ galleryNextClass }}" onClick="{{ galleryNext }}" aria-label="Photo suivante">›</button>
       </div>
-      <div class="gallery-thumbs" id="gallery-thumbs">
-        <sc-for list="{{ galleryPhotos }}" as="g" hint-placeholder-count="10">
-          <button type="button" class="gallery-thumb {{ g.activeClass }}" onClick="{{ g.select }}" aria-label="{{ g.alt }}"><img src="{{ g.src }}" alt="" draggable="false"></button>
-        </sc-for>
-      </div>
-    </div>
-    </div>
+    </sc-if>
   </section>
 
   <!-- TECH MEANS (avec photo en arrière-plan) -->
@@ -372,7 +352,7 @@
         <h3 style="font-size:14px;margin:0 0 16px">Navigation</h3>
         <div style="display:flex;flex-direction:column;gap:10px;font-size:13.5px">
           <a href="#prestations" style="color:rgba(244,242,238,.6)">Prestations</a>
-          <a href="#portfolio" style="color:rgba(244,242,238,.6)">Portfolio</a>
+          <a href="#galerie" style="color:rgba(244,242,238,.6)">Galerie</a>
           <a href="#agence" style="color:rgba(244,242,238,.6)">L'agence</a>
           <a href="#references" style="color:rgba(244,242,238,.6)">Références</a>
         </div>
@@ -398,18 +378,18 @@ class Component extends DCLogic {
   state = {
     openService: 0,
     openFaq: -1,
-    activeProject: 0,
     submitted: false,
     sending: false,
     sendError: false,
     activeSection: 'agence',
     menuOpen: false,
-    galleryIndex: 0
+    gridFilter: 'Tous',
+    lightboxIndex: -1
   };
 
   navData = [
     { id: 'prestations', label: 'Prestations' },
-    { id: 'portfolio', label: 'Portfolio' },
+    { id: 'galerie', label: 'Galerie' },
     { id: 'agence', label: "L'agence" },
     { id: 'references', label: 'Références' }
   ];
@@ -432,84 +412,30 @@ class Component extends DCLogic {
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
     document.querySelectorAll('.reveal').forEach(el => this.revealObserver.observe(el));
-
-    const galleryMain = document.getElementById('gallery-main');
-    const galleryTrack = document.getElementById('gallery-track');
-    if (galleryMain && galleryTrack) {
-      let dragging = false;
-      let startX = 0;
-      let currentX = 0;
-      let startTime = 0;
-
-      const onPointerDown = (e) => {
-        if (e.target.closest('.gallery-nav')) return;
-        dragging = true;
-        startX = e.clientX;
-        currentX = 0;
-        startTime = Date.now();
-        galleryTrack.classList.add('dragging');
-        if (galleryMain.setPointerCapture) galleryMain.setPointerCapture(e.pointerId);
-      };
-
-      const onPointerMove = (e) => {
-        if (!dragging) return;
-        currentX = e.clientX - startX;
-        const containerWidth = galleryMain.offsetWidth || 1;
-        const baseOffset = -this.state.galleryIndex * containerWidth;
-        galleryTrack.style.transform = `translateX(${baseOffset + currentX}px)`;
-      };
-
-      const endDrag = () => {
-        if (!dragging) return;
-        dragging = false;
-        galleryTrack.classList.remove('dragging');
-        const containerWidth = galleryMain.offsetWidth || 1;
-        const elapsed = Math.max(Date.now() - startTime, 1);
-        const velocity = (currentX / elapsed) * 1000;
-        let newIndex = this.state.galleryIndex;
-        if (Math.abs(velocity) > 500) {
-          newIndex += velocity > 0 ? -1 : 1;
-        } else if (Math.abs(currentX) > containerWidth * 0.22) {
-          newIndex += currentX > 0 ? -1 : 1;
-        }
-        galleryTrack.style.transform = '';
-        this.goToGallerySlide(newIndex);
-      };
-
-      galleryMain.addEventListener('pointerdown', onPointerDown);
-      galleryMain.addEventListener('pointermove', onPointerMove);
-      galleryMain.addEventListener('pointerup', endDrag);
-      galleryMain.addEventListener('pointerleave', endDrag);
-      galleryMain.addEventListener('pointercancel', endDrag);
-
-      this.galleryCleanup = () => {
-        galleryMain.removeEventListener('pointerdown', onPointerDown);
-        galleryMain.removeEventListener('pointermove', onPointerMove);
-        galleryMain.removeEventListener('pointerup', endDrag);
-        galleryMain.removeEventListener('pointerleave', endDrag);
-        galleryMain.removeEventListener('pointercancel', endDrag);
-      };
-    }
   }
 
   componentWillUnmount() {
     if (this.observer) this.observer.disconnect();
     if (this.revealObserver) this.revealObserver.disconnect();
-    if (this.galleryCleanup) this.galleryCleanup();
   }
 
-  goToGallerySlide(i) {
-    const count = this.galleryPhotoData.length;
-    const clamped = Math.max(0, Math.min(count - 1, i));
-    this.setState({ galleryIndex: clamped });
-    requestAnimationFrame(() => {
-      const thumbs = document.getElementById('gallery-thumbs');
-      const activeThumb = thumbs && thumbs.children[clamped];
-      if (thumbs && activeThumb) {
-        const target = activeThumb.offsetLeft - thumbs.offsetWidth / 2 + activeThumb.offsetWidth / 2;
-        thumbs.scrollTo({ left: target, behavior: 'smooth' });
-      }
-    });
+  openLightbox(id) {
+    const idx = this.portfolioGridData.findIndex((g) => g.id === id);
+    this.setState({ lightboxIndex: idx });
+  }
+
+  closeLightbox() {
+    this.setState({ lightboxIndex: -1 });
+  }
+
+  lightboxPrev() {
+    const count = this.portfolioGridData.length;
+    this.setState({ lightboxIndex: (this.state.lightboxIndex - 1 + count) % count });
+  }
+
+  lightboxNext() {
+    const count = this.portfolioGridData.length;
+    this.setState({ lightboxIndex: (this.state.lightboxIndex + 1) % count });
   }
 
   serviceData = [
@@ -529,12 +455,6 @@ class Component extends DCLogic {
     { icon: '⚑', title: 'Prestation sur mesure', desc: "Accompagnement de la conception à la diffusion, adapté à votre secteur." }
   ];
 
-  projectData = [
-    { name: 'Projet 01', icon: '◎', secteur: 'Automobile', title: "Plus qu'un séminaire !", p1: "Lors du séminaire 2025 de Speedy France, nous avons eu le plaisir de faire vivre ce moment bien au-delà de ces deux journées. Grâce à l'équipe photo, nous avons pu ancrer ce souvenir pour plusieurs années.", p2: "2 jours d'événements au Palais des Papes à Avignon, couverture totale du séminaire (plénière, salons, portraits, soirée)." },
-    { name: 'Projet 02', icon: '✦', secteur: 'Santé', title: 'Campagne pour Apothicaires Pharmacie', p1: "Une campagne nationale pour promouvoir les produits d'été en pharmacie, dans une ambiance solaire et estivale.", p2: "1 journée de shooting avec 2 modèles à Saint-Maximin et livraison des photos en 48h." },
-    { name: 'Projet 03', icon: '★', secteur: 'Sport', title: 'Un événement sportif de grande envergure !', p1: "Une compétition de BMX freestyle avec les plus grands champions internationaux, avec en guest des leaders mondiaux des J.O. de Paris ! Une vidéo pour faire rêver les plus jeunes et donner envie de rejoindre l'aventure et de se mesurer aux meilleurs lors de l'édition suivante.", p2: "1 journée de tournage et livraison de la vidéo en 7 jours." }
-  ];
-
   faqData = [
     { q: 'Où intervient Perpette Production ?', a: "Basé à Marseille, en région Sud. Déplacement dans toute la France pour les tournages entreprises." },
     { q: 'Quels types de vidéos sont réalisés ?', a: "Vidéo corporate, film événementiel, publicité et spot produit, contenu digital et social, clip artistique." },
@@ -543,10 +463,59 @@ class Component extends DCLogic {
     { q: 'Quels secteurs ont déjà été accompagnés ?', a: "Télécom, immobilier, restauration, hôtellerie, formation, banque, sport, santé, agroalimentaire, énergie, retail, spectacle vivant." }
   ];
 
-  galleryPhotoData = [
-    '9A2A0444-ab8832c7','A7407712-15cb51af','DSC02717-7755ab20','DSC05934-3-2783f649','DSC06134-2-d3f70faa',
-    'DSC08641-a5bd9b1b','Free_pro_-_mai-04-9873502d','Free_pro_-_mai-21-62bd39e0','Free_pro_-_mai-71-bf9149ff','Free_pro_-_mai-73-8f5ceb2c'
-  ].map((n, i) => ({ id: 'gallery-' + n.toLowerCase().replace(/[^a-z0-9]/g, ''), src: `./uploads/${n}-web.jpg`, alt: `Photo tournage ${i + 1}` }));
+  portfolioGridData = [
+    { id: 'grid-aphotical-1', src: './uploads/APHOTICAL/APOTHICAL1.jpg', title: 'Aphotical — Photo 1', category: 'APHOTICAL' },
+    { id: 'grid-aphotical-2', src: './uploads/APHOTICAL/APOTHICAL2.jpg', title: 'Aphotical — Photo 2', category: 'APHOTICAL' },
+    { id: 'grid-aphotical-3', src: './uploads/APHOTICAL/APOTHICAL3.jpg', title: 'Aphotical — Photo 3', category: 'APHOTICAL' },
+    { id: 'grid-cip-1', src: './uploads/CIP/SITE%20V2.jpg', title: 'CIP — Photo 1', category: 'CIP' },
+    { id: 'grid-cip-2', src: './uploads/CIP/SITE%20V2-2.jpg', title: 'CIP — Photo 2', category: 'CIP' },
+    { id: 'grid-cip-3', src: './uploads/CIP/SITE%20V2-3.jpg', title: 'CIP — Photo 3', category: 'CIP' },
+    { id: 'grid-cip-4', src: './uploads/CIP/SITE%20V2-4.jpg', title: 'CIP — Photo 4', category: 'CIP' },
+    { id: 'grid-corporate-1', src: './uploads/CORPORATE/CORPORATE%2011.jpg', title: 'Corporate — Photo 1', category: 'CORPORATE' },
+    { id: 'grid-corporate-2', src: './uploads/CORPORATE/CORPORATE%2012.jpg', title: 'Corporate — Photo 2', category: 'CORPORATE' },
+    { id: 'grid-corporate-3', src: './uploads/CORPORATE/CORPORATE%2013.jpg', title: 'Corporate — Photo 3', category: 'CORPORATE' },
+    { id: 'grid-corporate2-1', src: './uploads/CORPORATE%202/CORPORATE%2021.jpg', title: 'Corporate 2 — Photo 1', category: 'CORPORATE 2' },
+    { id: 'grid-corporate2-2', src: './uploads/CORPORATE%202/CORPORATE%2022.jpg', title: 'Corporate 2 — Photo 2', category: 'CORPORATE 2' },
+    { id: 'grid-corporate2-3', src: './uploads/CORPORATE%202/CORPORATE%2023.jpg', title: 'Corporate 2 — Photo 3', category: 'CORPORATE 2' },
+    { id: 'grid-esport-1', src: './uploads/E-SPORT/E-SPORT1.jpg', title: 'E-Sport — Photo 1', category: 'E-SPORT' },
+    { id: 'grid-esport-2', src: './uploads/E-SPORT/E-SPORT2.jpg', title: 'E-Sport — Photo 2', category: 'E-SPORT' },
+    { id: 'grid-esport-3', src: './uploads/E-SPORT/E-SPORT3.jpg', title: 'E-Sport — Photo 3', category: 'E-SPORT' },
+    { id: 'grid-esport-4', src: './uploads/E-SPORT/E-SPORT4.jpg', title: 'E-Sport — Photo 4', category: 'E-SPORT' },
+    { id: 'grid-horizon-1', src: './uploads/HORIZON/FREE%20PRO1.jpg', title: 'Horizon — Photo 1', category: 'HORIZON' },
+    { id: 'grid-horizon-2', src: './uploads/HORIZON/FREE%20PRO2.jpg', title: 'Horizon — Photo 2', category: 'HORIZON' },
+    { id: 'grid-horizon-3', src: './uploads/HORIZON/FREE%20PRO3.jpg', title: 'Horizon — Photo 3', category: 'HORIZON' },
+    { id: 'grid-horizon-4', src: './uploads/HORIZON/FREE%20PRO4.jpg', title: 'Horizon — Photo 4', category: 'HORIZON' },
+    { id: 'grid-influence-1', src: './uploads/Influence/SITE%20V2.jpg', title: 'Influence — Photo 1', category: 'Influence' },
+    { id: 'grid-influence-2', src: './uploads/Influence/SITE%20V2-2.jpg', title: 'Influence — Photo 2', category: 'Influence' },
+    { id: 'grid-influence-3', src: './uploads/Influence/SITE%20V2-3.jpg', title: 'Influence — Photo 3', category: 'Influence' },
+    { id: 'grid-influence-4', src: './uploads/Influence/SITE%20V2-4.jpg', title: 'Influence — Photo 4', category: 'Influence' },
+    { id: 'grid-koro-1', src: './uploads/KORO/KORO1.jpg', title: 'KoRo — Photo 1', category: 'KORO' },
+    { id: 'grid-koro-2', src: './uploads/KORO/KORO2.jpg', title: 'KoRo — Photo 2', category: 'KORO' },
+    { id: 'grid-koro-3', src: './uploads/KORO/KORO3.jpg', title: 'KoRo — Photo 3', category: 'KORO' },
+    { id: 'grid-koro-4', src: './uploads/KORO/KORO4.jpg', title: 'KoRo — Photo 4', category: 'KORO' },
+    { id: 'grid-koro-5', src: './uploads/KORO/KORO5.jpg', title: 'KoRo — Photo 5', category: 'KORO' },
+    { id: 'grid-marseille-1', src: './uploads/MARSEILLE%20GENERATION/MARSEILLE1.jpg', title: 'Marseille Génération — Photo 1', category: 'MARSEILLE GENERATION' },
+    { id: 'grid-marseille-2', src: './uploads/MARSEILLE%20GENERATION/MARSEILLE2.jpg', title: 'Marseille Génération — Photo 2', category: 'MARSEILLE GENERATION' },
+    { id: 'grid-marseille-3', src: './uploads/MARSEILLE%20GENERATION/MARSEILLE3.jpg', title: 'Marseille Génération — Photo 3', category: 'MARSEILLE GENERATION' },
+    { id: 'grid-nocturne-1', src: './uploads/Nocturne/Nocturne1.jpg', title: 'Nocturne — Photo 1', category: 'Nocturne' },
+    { id: 'grid-nocturne-2', src: './uploads/Nocturne/Nocturne2.jpg', title: 'Nocturne — Photo 2', category: 'Nocturne' },
+    { id: 'grid-nocturne-3', src: './uploads/Nocturne/Nocturne3.jpg', title: 'Nocturne — Photo 3', category: 'Nocturne' },
+    { id: 'grid-podcast-1', src: './uploads/PODCAST/PODCAST1.jpg', title: 'Podcast — Photo 1', category: 'PODCAST' },
+    { id: 'grid-podcast-2', src: './uploads/PODCAST/PODCAST2.jpg', title: 'Podcast — Photo 2', category: 'PODCAST' },
+    { id: 'grid-podcast-3', src: './uploads/PODCAST/PODCAST3.jpg', title: 'Podcast — Photo 3', category: 'PODCAST' },
+    { id: 'grid-podcast-4', src: './uploads/PODCAST/PODCAST4.jpg', title: 'Podcast — Photo 4', category: 'PODCAST' },
+    { id: 'grid-salon-1', src: './uploads/SALON/SALON1.jpg', title: 'Salon — Photo 1', category: 'SALON' },
+    { id: 'grid-salon-2', src: './uploads/SALON/SALON2.jpg', title: 'Salon — Photo 2', category: 'SALON' },
+    { id: 'grid-salon-3', src: './uploads/SALON/SALON3.jpg', title: 'Salon — Photo 3', category: 'SALON' },
+    { id: 'grid-speedy-1', src: './uploads/SPEEDY/SPEEDY1.jpg', title: 'Speedy — Photo 1', category: 'SPEEDY' },
+    { id: 'grid-speedy-2', src: './uploads/SPEEDY/SPEEDY2.jpg', title: 'Speedy — Photo 2', category: 'SPEEDY' },
+    { id: 'grid-speedy-3', src: './uploads/SPEEDY/SPEEDY3.jpg', title: 'Speedy — Photo 3', category: 'SPEEDY' },
+    { id: 'grid-z5-1', src: './uploads/Z5/Z51.jpg', title: 'Z5 — Photo 1', category: 'Z5' },
+    { id: 'grid-z5-2', src: './uploads/Z5/Z52.jpg', title: 'Z5 — Photo 2', category: 'Z5' },
+    { id: 'grid-z5-3', src: './uploads/Z5/Z53.jpg', title: 'Z5 — Photo 3', category: 'Z5' },
+    { id: 'grid-z5-4', src: './uploads/Z5/Z54.jpg', title: 'Z5 — Photo 4', category: 'Z5' },
+    { id: 'grid-z5-5', src: './uploads/Z5/Z55.jpg', title: 'Z5 — Photo 5', category: 'Z5' }
+  ];
 
   clientLogoData = [
     { name: 'Apothicaires', src: './assets/logo-apothicaires.png', h: 138, w: 234 },
@@ -565,18 +534,11 @@ class Component extends DCLogic {
 
   renderVals() {
     const openService = this.state.openService;
-    const activeIdx = this.state.activeProject;
 
     const services = this.serviceData.map((s, i) => ({
       ...s,
       open: i === openService,
       toggle: () => this.setState({ openService: i === openService ? -1 : i })
-    }));
-
-    const projects = this.projectData.map((p, i) => ({
-      ...p,
-      select: () => this.setState({ activeProject: i }),
-      tabStyle: `padding:11px 20px;border-radius:999px;font-size:13.5px;font-weight:600;cursor:pointer;border:1px solid ${i === activeIdx ? '#f2c14e' : 'rgba(255,255,255,.14)'};background:${i === activeIdx ? 'rgba(242,193,78,.1)' : 'transparent'};color:#f4f2ee`
     }));
 
     const tech = [
@@ -604,21 +566,30 @@ class Component extends DCLogic {
     const drawerStyle = `position:fixed;top:0;right:0;bottom:0;width:min(320px,80vw);background:#0a0a0a;z-index:60;padding:96px 28px 28px;border-left:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;transform:${menuOpen ? 'translateX(0)' : 'translateX(100%)'};transition:transform .3s ease`;
     const backdropStyle = `position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:55;opacity:${menuOpen ? 1 : 0};pointer-events:${menuOpen ? 'auto' : 'none'};transition:opacity .3s ease`;
 
-    const galleryIdx = this.state.galleryIndex;
-    const galleryCount = this.galleryPhotoData.length;
-    const galleryPhotos = this.galleryPhotoData.map((g, i) => ({
-      ...g,
-      activeClass: i === galleryIdx ? 'is-active' : '',
-      select: () => this.goToGallerySlide(i)
+    const gridFilter = this.state.gridFilter;
+    const gridCategories = ['Tous', ...new Set(this.portfolioGridData.map((g) => g.category))];
+    const gridCategoryTabs = gridCategories.map((c) => ({
+      name: c,
+      active: c === gridFilter,
+      tabStyle: `padding:11px 20px;border-radius:999px;font-size:13.5px;font-weight:600;cursor:pointer;border:1px solid ${c === gridFilter ? '#f2c14e' : 'rgba(255,255,255,.14)'};background:${c === gridFilter ? 'rgba(242,193,78,.1)' : 'transparent'};color:#f4f2ee`,
+      select: () => this.setState({ gridFilter: c })
     }));
+    const filteredGridPhotos = (gridFilter === 'Tous' ? this.portfolioGridData : this.portfolioGridData.filter((g) => g.category === gridFilter))
+      .map((g) => ({ ...g, open: () => this.openLightbox(g.id) }));
+
+    const lightboxIdx = this.state.lightboxIndex;
+    const lightboxOpen = lightboxIdx !== -1;
+    const lightboxPhoto = lightboxOpen ? this.portfolioGridData[lightboxIdx] : this.portfolioGridData[0];
 
     return {
-      galleryPhotos,
-      galleryTrackStyle: `transform:translateX(-${galleryIdx * 100}%)`,
-      galleryPrevClass: galleryIdx === 0 ? 'is-disabled' : '',
-      galleryNextClass: galleryIdx === galleryCount - 1 ? 'is-disabled' : '',
-      galleryPrev: () => this.goToGallerySlide(galleryIdx - 1),
-      galleryNext: () => this.goToGallerySlide(galleryIdx + 1),
+      gridCategoryTabs,
+      filteredGridPhotos,
+      lightboxOpen,
+      lightboxPhoto,
+      closeLightbox: () => this.closeLightbox(),
+      lightboxPrev: () => this.lightboxPrev(),
+      lightboxNext: () => this.lightboxNext(),
+      stopPropagation: (e) => e.stopPropagation(),
       navLinks,
       menuIcon: menuOpen ? '✕' : '☰',
       toggleMenu: () => this.setState({ menuOpen: !menuOpen }),
@@ -627,12 +598,7 @@ class Component extends DCLogic {
       backdropStyle,
       services,
       perks: this.perkData,
-      projects,
       faqs,
-      activeProject: this.projectData[activeIdx],
-      isProject0: activeIdx === 0,
-      isProject1: activeIdx === 1,
-      isProject2: activeIdx === 2,
       tech,
       clientLogos: this.clientLogoData,
       submitLabel: this.state.submitted ? 'Message envoyé ✓' : (this.state.sending ? 'Envoi…' : (this.state.sendError ? 'Réessayer' : 'Envoyer le brief')),

@@ -74,10 +74,6 @@
   .lightbox-nav:hover{background:rgba(244,242,238,.2)}
   .lightbox-prev{left:24px}
   .lightbox-next{right:24px}
-  .reveal{transition:opacity .8s cubic-bezier(.16,.84,.44,1),transform .8s cubic-bezier(.16,.84,.44,1)}
-  .reveal.reveal-armed{opacity:0}
-  .reveal.reveal-armed.reveal-left{transform:translateX(-60px)}
-  .reveal.reveal-armed.reveal-right{transform:translateX(60px)}
   .drawer-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:55;opacity:0;pointer-events:none;transition:opacity .3s ease}
   .drawer-backdrop.is-open{opacity:1;pointer-events:auto}
   .drawer{position:fixed;top:0;right:0;bottom:0;width:min(320px,80vw);background:#0a0a0a;z-index:60;padding:96px 28px 28px;border-left:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s ease}
@@ -91,9 +87,6 @@
   .cookie-manage-link{background:none;border:none;padding:0;font:inherit;color:rgba(244,242,238,.58);text-decoration:underline;cursor:pointer}
   @media (max-width:640px){
     .cookie-banner{left:12px;right:12px;bottom:12px;padding:18px}
-  }
-  @media (prefers-reduced-motion:reduce){
-    .reveal{transition:none;opacity:1;transform:none}
   }
   @media (max-width:1024px){
     .nav-desktop-links{display:none!important}
@@ -156,7 +149,7 @@
   </div>
 
   <!-- HERO -->
-  <section class="reveal reveal-left" style="position:relative;min-height:680px;display:flex;align-items:center;overflow:hidden">
+  <section style="position:relative;min-height:680px;display:flex;align-items:center;overflow:hidden">
     <img src="./dsc06255-4-mrnjukhb-bnva-web.jpg" alt="Photo hero — portrait / tournage" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0">
     <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(180deg, rgba(10,10,10,.8), rgba(10,10,10,.4) 45%, rgba(10,10,10,.9));pointer-events:none"></div>
     <div class="hero-inner" style="position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:150px 48px;width:100%">
@@ -172,7 +165,7 @@
   </section>
 
   <!-- ABOUT -->
-  <section id="agence" class="sec reveal reveal-right" style="padding:60px 48px 120px">
+  <section id="agence" class="sec" style="padding:60px 48px 120px">
     <div class="grid-about" style="display:grid;grid-template-columns:1fr 1.2fr;gap:56px;align-items:center;max-width:1280px;margin:0 auto">
     <div style="aspect-ratio:4/3;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.08)">
       <iframe src="https://www.youtube-nocookie.com/embed/_pMn3SdzLoo" title="Showreel Perpette Production" loading="lazy" style="width:100%;height:100%;border:0;display:block" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true"></iframe>
@@ -187,10 +180,10 @@
   </section>
 
   <!-- SERVICES -->
-  <section id="prestations" class="sec reveal reveal-left" style="position:relative;padding:80px 48px;background-color:#0a0a0a;overflow:hidden">
+  <section id="prestations" class="sec" style="position:relative;padding:80px 48px;background-color:#0a0a0a;overflow:hidden">
     <div class="grid-services" style="position:relative;z-index:1;max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start">
     <div>
-      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(30px,3.6vw,44px);margin:0 0 22px;line-height:1.1">Nos prestations vidéo<br>pour entreprises<span style="color:#f2c14e">.</span></h2>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(30px,3.6vw,44px);margin:0 0 22px;line-height:1.1">Nos <span style="background:#f2c14e;color:#0a0a0a;padding:1px 10px;border-radius:6px">prestations</span> vidéo<br>pour entreprises<span style="color:#f2c14e">.</span></h2>
       <div style="width:56px;height:2px;background:rgba(255,255,255,.2);margin-bottom:22px"></div>
       <p style="font-size:15px;line-height:1.75;color:rgba(244,242,238,.6);margin:0 0 14px">Chaque projet est une histoire à part entière.</p>
       <p style="font-size:15px;line-height:1.75;color:rgba(244,242,238,.6);margin:0 0 14px">Au cœur de chaque tournage, <strong style="color:#f4f2ee">créativité, exigence et sincérité</strong> se rejoignent pour donner naissance à des vidéos qui résonnent autant par leur image que par leur authenticité.</p>
@@ -222,9 +215,9 @@
   </div></section>
 
   <!-- PERKS -->
-  <section class="sec reveal reveal-right" style="padding:60px 48px 100px">
+  <section class="sec" style="padding:60px 48px 100px">
     <div style="max-width:1280px;margin:0 auto">
-    <h2 style="font-family: 'Space Grotesk',sans-serif; font-weight: 700; font-size: clamp(32px,4vw,52px); margin: 0 0 40px; text-align: center">Pourquoi travailler avec Perpette Production<span style="color:#f2c14e">.</span></h2>
+    <h2 style="font-family: 'Space Grotesk',sans-serif; font-weight: 700; font-size: clamp(32px,4vw,52px); margin: 0 0 40px; text-align: center">Pourquoi travailler avec <span style="background:#f2c14e;color:#0a0a0a;padding:1px 10px;border-radius:6px">Perpette</span> Production<span style="color:#f2c14e">.</span></h2>
     <div class="grid-perks" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px">
       <div class="card-hover" style="border-radius:14px;padding:26px;background:rgba(255,255,255,.02)">
         <div style="width:40px;height:40px;border-radius:999px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:16px">◎</div>
@@ -267,7 +260,7 @@
   </section>
 
   <!-- GALERIE PORTFOLIO (grille filtrable + lightbox) -->
-  <section id="galerie" class="sec reveal reveal-right" style="padding:20px 48px 60px">
+  <section id="galerie" class="sec" style="padding:20px 48px 60px">
     <div style="max-width:1280px;margin:0 auto">
     <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(28px,3.4vw,40px);margin:0 0 30px;text-align:center">Notre galerie<span style="color:#f2c14e">.</span></h2>
     <div id="galleryTabs" style="display:flex;justify-content:center;gap:10px;margin-bottom:30px;flex-wrap:wrap" role="group" aria-label="Filtrer la galerie par catégorie">
@@ -473,7 +466,7 @@
   </section>
 
   <!-- TECH MEANS -->
-  <section class="sec reveal reveal-left" style="position:relative;padding:60px 48px 100px;background-color:#0a0a0a;overflow:hidden">
+  <section class="sec" style="position:relative;padding:60px 48px 100px;background-color:#0a0a0a;overflow:hidden">
     <div style="position:relative;z-index:1;max-width:1280px;margin:0 auto">
     <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(28px,3.4vw,40px);margin:0 0 30px;text-align:center">Moyens techniques<span style="color:#f2c14e">.</span></h2>
     <div class="grid-tech" style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
@@ -498,10 +491,10 @@
   </section>
 
   <!-- REFERENCES / CLIENTS -->
-  <section id="references" class="sec reveal reveal-right" style="position:relative;padding:20px 48px 100px;overflow:hidden">
+  <section id="references" class="sec" style="position:relative;padding:20px 48px 100px;overflow:hidden">
     <div style="position:relative;z-index:1">
     <div style="max-width:1280px;margin:0 auto;text-align:center">
-    <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(26px,3vw,36px);margin:0 0 12px">Ils nous ont fait confiance<span style="color:#f2c14e">.</span></h2>
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(26px,3vw,36px);margin:0 0 12px">Ils nous ont fait <span style="background:#f2c14e;color:#0a0a0a;padding:1px 10px;border-radius:6px">confiance</span><span style="color:#f2c14e">.</span></h2>
     <p style="font-size:14px;color:rgba(244,242,238,.5);margin:0 0 34px">Plus de 150 projets réalisés pour des entreprises de tous secteurs : télécom, immobilier, restauration, hôtellerie, formation, banque, sport, santé, agroalimentaire, énergie, retail, spectacle vivant.</p>
     <div class="logos-marquee">
       <div class="logos-track">
@@ -536,7 +529,7 @@
   </section>
 
   <!-- FAQ -->
-  <section id="faq" class="sec reveal reveal-left" style="padding:60px 48px 100px">
+  <section id="faq" class="sec" style="padding:60px 48px 100px">
     <div style="max-width:840px;margin:0 auto">
     <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(30px,3.6vw,44px);margin:0 0 30px;text-align:center">Questions fréquentes<span style="color:#f2c14e">.</span></h2>
     <div id="faqAccordion" style="border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:12px;background:rgba(255,255,255,.02)">
@@ -565,7 +558,7 @@
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="sec reveal reveal-right" style="padding:110px 48px 90px;border-top:1px solid rgba(255,255,255,.06)">
+  <section id="contact" class="sec" style="padding:110px 48px 90px;border-top:1px solid rgba(255,255,255,.06)">
     <div class="grid-contact" style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start">
       <div>
         <p style="font-size:12px;letter-spacing:4px;color:rgba(244,242,238,.58);margin:0 0 22px;font-family:ui-monospace,monospace">PARLONS-EN</p>
@@ -707,41 +700,6 @@
     }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
     navSections.forEach(function (s) { navObserver.observe(s); });
   }
-
-  // ---- Reveal-on-scroll (progressive enhancement: content is visible by
-  // default in the CSS; JS "arms" the fade-in, then reveals each section as
-  // its real position enters the viewport — checked on scroll/resize/load,
-  // so it can't get stuck the way a one-shot IntersectionObserver callback can) ----
-  var revealEls = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
-  revealEls.forEach(function (el) { el.classList.add('reveal-armed'); });
-
-  function checkReveal() {
-    var vh = window.innerHeight || document.documentElement.clientHeight;
-    revealEls = revealEls.filter(function (el) {
-      var rect = el.getBoundingClientRect();
-      if (rect.top < vh * 0.9 && rect.bottom > 0) {
-        el.classList.remove('reveal-armed');
-        el.classList.add('is-visible');
-        return false;
-      }
-      return true;
-    });
-    if (!revealEls.length) {
-      window.removeEventListener('scroll', onRevealScroll);
-      window.removeEventListener('resize', onRevealScroll);
-    }
-  }
-
-  var revealTicking = false;
-  function onRevealScroll() {
-    if (revealTicking) return;
-    revealTicking = true;
-    requestAnimationFrame(function () { checkReveal(); revealTicking = false; });
-  }
-
-  window.addEventListener('scroll', onRevealScroll, { passive: true });
-  window.addEventListener('resize', onRevealScroll);
-  checkReveal();
 
   // ---- Gallery: category filter ----
   var galleryTabs = Array.prototype.slice.call(document.querySelectorAll('#galleryTabs .tab-btn'));
